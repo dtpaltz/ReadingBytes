@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 
 namespace ReadingBytes
 {
@@ -9,7 +10,55 @@ namespace ReadingBytes
 		{
 			byte[] arr = new byte[] { 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3 };
 
-			DecodeBytes2(arr);
+			//DecodeBytes2(arr);
+
+			EncodeLabel();
+		}
+
+
+		public static string Label = "270";
+
+		public static void EncodeLabel()
+		{
+			StringBuilder sb = new StringBuilder();
+			foreach (char c in Label)
+			{
+				int n = byte.Parse(c.ToString());
+				sb.Append(Convert.ToString(n, 2).PadLeft(3, '0'));
+			}
+
+			byte[] bytes = BinaryStringToBytes(sb.ToString().Substring(1));
+
+			byte encodedLabel = ReverseByteBits(bytes[0]);
+
+			Console.ReadLine();
+		}
+
+
+
+
+		public static byte[] BinaryStringToBytes(string binaryStr)
+		{
+			int numOfBytes = binaryStr.Length / 8;
+			byte[] bytes = new byte[numOfBytes];
+			for (int i = 0; i < numOfBytes; ++i)
+			{
+				bytes[i] = Convert.ToByte(binaryStr.Substring(8 * i, 8), 2);
+			}
+
+			return bytes;
+		}
+
+		/// <summary>
+		/// Not tested
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
+		public static string ReverseString(string s)
+		{
+			char[] arr = s.ToCharArray();
+			Array.Reverse(arr);
+			return new string(arr);
 		}
 
 
